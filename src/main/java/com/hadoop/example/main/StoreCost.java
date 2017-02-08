@@ -1,5 +1,7 @@
 package com.hadoop.example.main;
 
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DurationFormatUtils;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.FloatWritable;
 import org.apache.hadoop.io.Text;
@@ -26,8 +28,12 @@ public class StoreCost {
 		job.setReducerClass(StoreCostReducer.class);
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(FloatWritable.class);
-		System.out.println("Execution start");
-		System.exit(job.waitForCompletion(true) ? 0 : 1);
+		long time = System.currentTimeMillis();
+		System.out.println("Execution start at: " + DateFormatUtils.format(time, "dd-MM-yy HH:mm:ss:SS"));
+		boolean jobStatus = job.waitForCompletion(true);
+		System.out.println("Execution completed in: " + DurationFormatUtils.formatDuration(System.currentTimeMillis() - time, "HH:mm:ss:SS"));
+		System.out.println("Job Completed. Job status : " + jobStatus);
+		System.exit((jobStatus) ? 0 : 1);
 	}
 
 }

@@ -16,7 +16,6 @@ public class StoreCostMapper extends Mapper<LongWritable, Text, Text, FloatWrita
 	public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 		String line = value.toString();
 		String[] input = line.split("\t");
-		System.out.println(value);
 		if(input.length == 6){
 			Float cost = Float.parseFloat(input[4]);
 			String store = input[2];
